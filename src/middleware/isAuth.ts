@@ -18,7 +18,7 @@ export const isAuth = (
 			token,
 			process.env.JWT_SECRET_TOKEN as string
 		) as UserInterface
-		req.userId = unhashedToken.id
+		req.userId = unhashedToken._id
 		next()
 	} catch (err) {
 		return next(err)
