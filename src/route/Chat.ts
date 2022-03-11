@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { isAuth } from '../middleware/isAuth'
-import Chat, { ChatInterface } from '../model/Chat'
+import { ChatInterface } from '../model/Chat'
 import ChatService from '../service/ChatService'
 import MessageService from '../service/MessageService'
 import { CustomRequest } from '../util/interfaces'
@@ -49,6 +49,7 @@ router.post('/sendMessage/:chatId', isAuth, async (req, res, next) => {
 		const { text } = req.body
 		const message = await MessageService.createMessage(userId!, text)
 		const chat = await ChatService.sendMessageToChat(chatId, message)
+		res.status(200).json({chat: chat})
 	} catch (err) {
 		next(err)
 	}

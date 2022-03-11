@@ -8,7 +8,7 @@ const router = Router()
 router.post('/signup', async (req, res, next) => {
 	try {
 		const { body } = req as { body: UserInterface }
-		const user: UserInterface = await UserService.signup(body)
+		await UserService.signup(body)
 		return res.status(200).json({ message: 'User created successfully!' })
 	} catch (err) {
 		return next(err)
