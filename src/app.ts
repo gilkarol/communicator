@@ -14,6 +14,11 @@ app.use('/auth', authRoutes)
 app.use('/chat', chatRoutes)
 app.use('/user', userRoutes)
 
-mongoose.connect(process.env.DATABASE as string).then((result) => {
-	app.listen(8080)
-})
+mongoose
+	.connect(process.env.DATABASE as string)
+	.then((result) => {
+		app.listen(8080)
+	})
+	.catch((err) => {
+		console.log(err)
+	})
