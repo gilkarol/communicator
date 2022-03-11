@@ -36,6 +36,7 @@ router.post('/create/:anotherUserId', isAuth, async (req, res, next) => {
 		const { anotherUserId } = req.params
 		const { userId } = req as CustomRequest
 		const chat = await ChatService.createChat(userId!, anotherUserId)
+		res.status(201).json({message: 'Chat created successfully!', chat: chat})
 	} catch (err) {
 		next(err)
 	}
