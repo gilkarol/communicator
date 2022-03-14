@@ -1,4 +1,3 @@
-import Chat, { ChatInterface } from '../model/Chat'
 import User, { UserInterface } from '../model/User'
 import { HttpError } from '../util/classes'
 import ChatService from './ChatService';
