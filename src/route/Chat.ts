@@ -10,8 +10,8 @@ const router = Router()
 // GET ALL CHATS
 router.get('/chats', isAuth, async (req, res, next) => {
 	try {
-		const { userId } = req as CustomRequest
-		const chats: ChatInterface[] = await ChatService.getChats(userId as string)
+		const { user } = req as CustomRequest
+		const chats: ChatInterface[] = await ChatService.getChats(user._id!)
 		res.status(200).json({ chats: chats })
 	} catch (err) {
 		return next(err)
@@ -21,9 +21,9 @@ router.get('/chats', isAuth, async (req, res, next) => {
 // GET CHAT BY ANOTHER USER NICKNAME
 router.get('/:anotherUserNickname', isAuth, async (req, res, next) => {
 	try {
-		const { userId } = req as CustomRequest
+		const  { user }  = req as CustomRequest
 		const { anotherUserNickname } = req.params
-		const chat: ChatInterface = await ChatService.getChatByNickname(userId!, anotherUserNickname)
+		const chat: ChatInterface = await ChatService.getChatByNickname(user._id!, anotherUserNickname)
 		res.status(200).json({ chat: chat })
 	} catch (err) {
 		return next(err)
@@ -34,8 +34,8 @@ router.get('/:anotherUserNickname', isAuth, async (req, res, next) => {
 router.post('/create/:anotherUserId', isAuth, async (req, res, next) => {
 	try {
 		const { anotherUserId } = req.params
-		const { userId } = req as CustomRequest
-		const chat = await ChatService.createChat(userId!, anotherUserId)
+		const { user } = req as CustomRequest
+		const chat = await ChatService.createChat(user._id!, anotherUserId)
 		res.status(201).json({message: 'Chat created successfully!', chat: chat})
 	} catch (err) {
 		next(err)
@@ -45,10 +45,10 @@ router.post('/create/:anotherUserId', isAuth, async (req, res, next) => {
 // SEND MESSAGE TO CHAT
 router.post('/sendMessage/:chatId', isAuth, async (req, res, next) => {
 	try {
-		const { userId } = req as CustomRequest
+		const { user } = req as CustomRequest
 		const { chatId } = req.params
 		const { text } = req.body
-		const message = await MessageService.createMessage(userId!, text)
+		const message = await MessageService.createMessage(user._id!, text)
 		const chat = await ChatService.sendMessageToChat(chatId, message)
 		res.status(200).json({chat: chat})
 	} catch (err) {

@@ -1,5 +1,7 @@
 import { Router } from 'express'
+import passport from 'passport';
 import { UserInterface } from '../model/User'
+import AuthService from '../service/AuthService';
 import UserService from '../service/AuthService'
 
 const router = Router()
@@ -19,9 +21,8 @@ router.post('/signup', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
 	try {
 		const { body } = req as { body: UserInterface }
-		const user: UserInterface = await UserService.login(body)
-		const token: string = await UserService.getAuthenticationToken(user)
-		return res.status(200).json({ user: user, token: token })
+		const user = await AuthService.login(body)
+		return res.status(200).json({ user: user })
 	} catch (err) {
 		return next(err)
 	}
