@@ -1,4 +1,6 @@
+import Chat, { ChatInterface } from '../model/Chat'
 import Message, { MessageInterface } from '../model/Message'
+import User, { UserInterface } from '../model/User'
 
 export default class MessageService {
 	static createMessage = async (

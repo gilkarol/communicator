@@ -2,6 +2,8 @@ import User, { UserInterface } from '../model/User'
 import bcryptjs from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import { HttpError } from '../util/classes'
+import passport from 'passport'
+import { Strategy, ExtractJwt } from 'passport-jwt'
 
 export default class AuthService {
 	static signup = async (body: UserInterface): Promise<UserInterface> => {

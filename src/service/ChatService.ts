@@ -1,7 +1,8 @@
 import Chat, { ChatInterface } from '../model/Chat'
-import { MessageInterface } from '../model/Message'
+import { MessageInterface } from '../model/Message';
+import User from '../model/User'
 import { HttpError } from '../util/classes'
-import UserService from './UserService'
+import UserService from './UserService';
 
 export default class ChatService {
 	static getChats = async (userId: string): Promise<ChatInterface[]> => {
@@ -11,9 +12,7 @@ export default class ChatService {
 	}
 
 	static getChatByNickname = async (userId: string, anotherUserId: string) => {
-		const chat = await Chat.findOne({
-			where: { participants: [userId, anotherUserId] },
-		})
+		const chat = await Chat.findOne({where: {participants: [userId, anotherUserId]}})
 		if (!chat) {
 			throw new HttpError(404, 'Chat does not exist!')
 		}
@@ -43,10 +42,7 @@ export default class ChatService {
 		return newChat
 	}
 
-	static sendMessageToChat = async (
-		chatId: string,
-		message: MessageInterface
-	) => {
+	static sendMessageToChat = async (chatId: string, message: MessageInterface) => {
 		const chat = await this.getChatById(chatId)
 		chat.messages.push(message)
 		await chat.save()
