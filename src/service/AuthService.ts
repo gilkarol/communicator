@@ -10,7 +10,6 @@ export default class AuthService {
 		const emailExists = await User.findOne({
 			email: body.email,
 		})
-		console.log(emailExists)
 		if (emailExists) {
 			throw new HttpError(409, 'This email already exists!')
 		}
